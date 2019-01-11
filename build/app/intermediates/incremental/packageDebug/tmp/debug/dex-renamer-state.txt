@@ -1,4 +1,4 @@
-#Tue Jan 08 10:14:07 WIB 2019
+#Fri Jan 11 14:53:52 WIB 2019
 base.0=/Users/gofur/learn/FlutterLearn/flutter_talks/build/app/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex
