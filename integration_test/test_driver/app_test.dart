@@ -1,5 +1,6 @@
 // Imports the Flutter Driver API
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:ozzie/ozzie.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -11,22 +12,24 @@ void main() {
     final buttonFinder = find.byValueKey('increment');
 
     FlutterDriver driver;
+    Ozzie ozzie;
 
     // Connect to the Flutter driver before running any tests
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      ozzie = Ozzie.initWith(driver, groupName: 'counter');
     });
 
     // Close the connection to the driver after the tests have completed
     tearDownAll(() async {
-      if (driver != null) {
-        driver.close();
-      }
+      if (driver != null) driver.close();
+      ozzie.generateHtmlReport();
     });
 
     test('starts at 0', () async {
       // Use the `driver.getText` method to verify the counter starts at 0.
       expect(await driver.getText(counterTextFinder), "0");
+      await ozzie.takeScreenshot('initial_counter_is_0');
     });
 
     test('increments the counter', () async {
@@ -35,6 +38,7 @@ void main() {
 
       // Then, verify the counter text has been incremented by 1
       expect(await driver.getText(counterTextFinder), "1");
+      await ozzie.takeScreenshot('counter_is_1');
     });
   });
 }
